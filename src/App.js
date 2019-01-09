@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class LambdaDemo extends Component {
@@ -12,16 +11,17 @@ class LambdaDemo extends Component {
     e.preventDefault();
 
     this.setState({ loading: true });
-    fetch('/.netlify/functions/' + api)
+    const params = '{"title":"vice","year":"2018"}';
+    fetch('/.netlify/functions/' + api + '?params=' + params)
       .then(response => response.json())
       .then(json => {
-        this.setState({ loading: false, msg: JSON.stringify(json)/*json.msg*/ });
+        this.setState({ loading: false, msg: JSON.stringify(json.msg) });
         console.log(json);
       });
   };
 
   render() {
-    
+
     const { loading, msg } = this.state;
 
     return (
