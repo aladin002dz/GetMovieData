@@ -1,0 +1,19 @@
+form {
+    margin:2rem auto;
+    display: inline-flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border: solid 1px white;
+}
+
+form label {
+    margin: 0 1rem;
+}
+
+form input {
+    margin: 0 1rem 0 0 ;
+}
+
