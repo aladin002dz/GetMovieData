@@ -2,17 +2,36 @@ import React, { Component } from 'react'
 import './MovieFinder.css'
 import DisplayMovieData from './DisplayMovieData'
 
+
+const RESET_VALUES = {title: '', year: ''};
+
 class MovieFinder extends Component {
     constructor(props) {
       super(props);
-      this.state = { loading: false, movieData: null };
+      this.state = { 
+                    movie: Object.assign({}, RESET_VALUES),
+                    loading: false, 
+                    movieData: null };
+      this.handleChange = this.handleChange.bind(this);
     }
   
+    handleChange(e) {
+      const target = e.target;
+      const value = target.value;
+      const name = target.name;
+  
+      this.setState((prevState) => {
+        prevState.movie[name] = value;
+        return { movie: prevState.movie };
+      });
+    }
+
     handleClick = api => e => {
       e.preventDefault();
   
       this.setState({ loading: true });
-      const params = '{"title":"vice","year":"2018"}';
+      const params = '{"title":"'+this.state.movie.title+
+                    '","year":"'+this.state.movie.year+'"}';
       fetch('/.netlify/functions/' + api + '?params=' + params)
         .then(response => response.json())
         .then(json => {
@@ -33,7 +52,7 @@ class MovieFinder extends Component {
           type="text"
           placeholder="Title"
           value={this.props.movieTitle}
-          name="movieTitle"
+          name="title"
           onChange={this.handleChange}
           className="input-small"
         />
@@ -42,7 +61,7 @@ class MovieFinder extends Component {
           type="text"
           checked={this.props.movieYear}
           placeholder="Year"
-          name="movieYear"
+          name="year"
           onChange={this.handleChange}
           className="input-small"
           style={{width:'100px'}}
@@ -55,9 +74,6 @@ class MovieFinder extends Component {
           </button>
       </form>
           <DisplayMovieData movieData = { JSON.parse(movieData) }/>
-          <div>
-              { movieData }
-          </div>
         </div>
       );
     }
