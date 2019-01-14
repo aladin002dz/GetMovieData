@@ -11,6 +11,7 @@ export async function handler(event, context) {
     const title = params.title;
     const year = params.year;
     
+
     const { API_URL, API_CLIENT_ID, API_CLIENT_SECRET } = process.env;
     
     const URL = `${API_URL}?i=${API_CLIENT_ID}&apikey=${API_CLIENT_SECRET}&t=${title}&y=${year}`;

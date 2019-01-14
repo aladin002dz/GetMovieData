@@ -1,5 +1,7 @@
 # movie-finder
 Find Data about a Movie, like rating, actors, poster,...
+Check:  
+[https://getmoviedata.netlify.com/](https://getmoviedata.netlify.com/)
 
 ### Web api used [https://omdbapi.com/](https://omdbapi.com/)
 

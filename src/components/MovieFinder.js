@@ -9,7 +9,7 @@ class MovieFinder extends Component {
     constructor(props) {
       super(props);
       this.state = { 
-                    movie: Object.assign({}, RESET_VALUES),
+                    movieRequest: Object.assign({}, RESET_VALUES),
                     loading: false, 
                     movieData: null };
       this.handleChange = this.handleChange.bind(this);
@@ -21,8 +21,8 @@ class MovieFinder extends Component {
       const name = target.name;
   
       this.setState((prevState) => {
-        prevState.movie[name] = value;
-        return { movie: prevState.movie };
+        prevState.movieRequest[name] = value;
+        return { movie: prevState.movieRequest };
       });
     }
 
@@ -38,11 +38,31 @@ class MovieFinder extends Component {
           this.setState({ loading: false, movieData: JSON.stringify(json.movieData) });
         });
     };
+
+    errorMessage( movieData) {
+      if(movieData != null)
+      {
+        let response = JSON.parse(movieData);
+        if(response["Response"] != 'True')
+        {
+          movieData = null;
+          return (
+            <div>
+              <div style={{color:'red', fontSize:'2rem'}}>{response["Error"]}</div>
+              <DisplayMovieData movieData = { JSON.parse(movieData) }/>
+            </div>
+          ) ;
+        }
+        return <DisplayMovieData movieData = { JSON.parse(movieData) }/>
+      }
+      return <DisplayMovieData movieData = { JSON.parse(movieData) }/>
+  }
   
     render() {
   
       const { loading, movieData } = this.state;
-  
+
+
       return (
         <div>
           <div className="search-panel">
@@ -73,7 +93,7 @@ class MovieFinder extends Component {
                 </button>
             </form>
           </div>
-          <DisplayMovieData movieData = { JSON.parse(movieData) }/>
+          {this.errorMessage( movieData)}
         </div>
       );
     }

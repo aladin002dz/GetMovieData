@@ -4,4 +4,27 @@
 
 li span {
     font-weight: 450;
+    padding: 0.2rem;
+}
+
+li ul li {
+    padding: 0.2rem;
+}
+
+.empty-poster {
+    background-color:#EFF1F2;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    padding-top: 50%;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 1.5rem;
+}
+
+.poster {
+    width: 100%;
+    height: auto;
+    max-width: auto;
+    max-height: 100%;
 }
