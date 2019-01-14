@@ -2,7 +2,7 @@
 Find Data about a Movie, like rating, actors, poster,...
 ### Check [https://getmoviedata.netlify.com/](https://getmoviedata.netlify.com/)
 
-** Web api used [https://omdbapi.com/](https://omdbapi.com/) **
+**Web api used [https://omdbapi.com/](https://omdbapi.com/)_**
 
 ## Roadmap:
 - [x] Get data locally from netlify lambda function (getmovie).
