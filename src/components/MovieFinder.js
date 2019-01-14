@@ -36,7 +36,6 @@ class MovieFinder extends Component {
         .then(response => response.json())
         .then(json => {
           this.setState({ loading: false, movieData: JSON.stringify(json.movieData) });
-   //console.log(json);
         });
     };
   
@@ -46,33 +45,34 @@ class MovieFinder extends Component {
   
       return (
         <div>
-      <form>
-        <label className="control-label">Title:</label>                   
-        <input
-          type="text"
-          placeholder="Title"
-          value={this.props.movieTitle}
-          name="title"
-          onChange={this.handleChange}
-          className="input-small"
-        />
-        <label className="control-label">Year:</label>
-        <input
-          type="text"
-          checked={this.props.movieYear}
-          placeholder="Year"
-          name="year"
-          onChange={this.handleChange}
-          className="input-small"
-          style={{width:'100px'}}
-        />
-          <button 
-            type="button" 
-            className="btn btn-primary"
-            onClick={this.handleClick('getmovie')}>
-            {loading ? 'Loading...' : 'Get Movie'}
-          </button>
-      </form>
+          <div className="search-panel">
+            <form>                  
+              <input
+                type="text"
+                placeholder="Title"
+                value={this.props.movieTitle}
+                name="title"
+                onChange={this.handleChange}
+                className="form-control"
+              />
+              <input
+                type="text"
+                checked={this.props.movieYear}
+                placeholder="Year"
+                name="year"
+                onChange={this.handleChange}
+                className="form-control"
+                style={{width:'100px'}}
+              />
+                <button 
+                  type="button" 
+                  className="btn btn-primary"
+                  style={{width:'300px'}}
+                  onClick={this.handleClick('getmovie')}>
+                  {loading ? 'Loading...' : 'Search Movie Data'}
+                </button>
+            </form>
+          </div>
           <DisplayMovieData movieData = { JSON.parse(movieData) }/>
         </div>
       );

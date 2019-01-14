@@ -1,13 +1,22 @@
+.search-panel {
+    background-color: #fafafa;
+    border: 1px solid #e8e8e8;
+}
+
 form {
     margin:2rem auto;
     display: inline-flex;
-    flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
-    border: solid 1px white;
 }
+
+/*
+form-control {
+    display:inline-block;
+}
+*/
 
 form label {
     margin: 0 1rem;

@@ -1,6 +1,7 @@
 body {
-  background-color: #282c34;
-  color: #fff;
+  /*background-color: #282c34;*/
+  background-color: #fff;
+  color: #000;
   padding: 2rem;
 }
 .App {
