@@ -10,7 +10,7 @@ export default class DisplayMovieData extends Component {
 
         if(movieData != null)
         {
-            let {Title, Year, Released, Genre, Director, Writer,
+            let { Released, Genre, Director, Writer,
             Actors, Plot, Language, Poster, imdbRating, imdbVotes,
         Ratings, Production} = movieData;
 
@@ -18,9 +18,9 @@ export default class DisplayMovieData extends Component {
             <li><span>{rating.Source}:</span> {rating.Value} </li>
             );
         return (
-            <div> 
+            <div className="movie-data"> 
                 <div className="row">
-                    <div className="col-sm-12 col-md-7 movie-data">
+                    <div className="col-sm-12 col-md-7">
                         <ul className="list-group">
                             <li className="list-group-item">             
                                 <span>IMDB Rating:</span> { imdbRating }
@@ -70,9 +70,9 @@ export default class DisplayMovieData extends Component {
     else
     {
         return (
-            <div> 
+            <div className="movie-data"> 
                 <div className="row">
-                    <div className="col-sm-12 col-md-7 movie-data">
+                    <div className="col-sm-12 col-md-7">
                         <ul className="list-group">
                             <li className="list-group-item">             
                                 <span>IMDB Rating:</span>                             </li> 
@@ -125,7 +125,7 @@ export default class DisplayMovieData extends Component {
  catch(err)
     {
         return (
-            <div>
+            <div style={{marginLeft:'2rem', paddingLeft:'2rem'}}>
                 {err.message}
             </div>
         )

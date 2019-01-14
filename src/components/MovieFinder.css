@@ -4,25 +4,6 @@
 }
 
 form {
-    margin:2rem auto;
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-}
-
-/*
-form-control {
-    display:inline-block;
-}
-*/
-
-form label {
-    margin: 0 1rem;
-}
-
-form input {
-    margin: 0 1rem 0 0 ;
+    margin:2rem;
 }
 

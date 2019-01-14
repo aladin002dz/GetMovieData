@@ -13,8 +13,11 @@ class MovieFinder extends Component {
                     loading: false, 
                     movieData: null };
       this.handleChange = this.handleChange.bind(this);
+      this.errorMessage = this.errorMessage.bind(this);
     }
-  
+    componentDidMount(){
+      this.titleInput.focus(); 
+   }
     handleChange(e) {
       const target = e.target;
       const value = target.value;
@@ -22,7 +25,7 @@ class MovieFinder extends Component {
   
       this.setState((prevState) => {
         prevState.movieRequest[name] = value;
-        return { movie: prevState.movieRequest };
+        return { movieRequest: prevState.movieRequest };
       });
     }
 
@@ -30,18 +33,26 @@ class MovieFinder extends Component {
       e.preventDefault();
   
       this.setState({ loading: true });
-      const params = '{"title":"'+this.state.movie.title+
-                    '","year":"'+this.state.movie.year+'"}';
+      if((this.state.movieRequest.title !== '')){
+      const params = '{"title":"'+this.state.movieRequest.title+
+                    '","year":"'+this.state.movieRequest.year+'"}';
       fetch('/.netlify/functions/' + api + '?params=' + params)
         .then(response => response.json())
         .then(json => {
           this.setState({ loading: false, movieData: JSON.stringify(json.movieData) });
         });
+      }
+      else {
+        alert('Please enter the movie title!');
+        this.titleInput.focus(); 
+        this.setState({ loading: false });
+      }
     };
 
-    errorMessage( movieData) {
+    errorMessage = ( movieData) => {
       if(movieData != null)
       {
+        this.titleInput.focus(); 
         let response = JSON.parse(movieData);
         if(response["Response"] != 'True')
         {
@@ -66,7 +77,9 @@ class MovieFinder extends Component {
       return (
         <div>
           <div className="search-panel">
-            <form>                  
+            <form>  
+            <div className="form-row">
+            <div className="col-md-6">               
               <input
                 type="text"
                 placeholder="Title"
@@ -74,23 +87,33 @@ class MovieFinder extends Component {
                 name="title"
                 onChange={this.handleChange}
                 className="form-control"
+                ref={(inputTitle) => { this.titleInput = inputTitle; }} 
               />
+              <small class="form-text text-muted">
+                Ex: Sully, Vice,...
+              </small>
+              </div> 
+    <div className="col-md-3">
               <input
                 type="text"
                 checked={this.props.movieYear}
                 placeholder="Year"
                 name="year"
                 onChange={this.handleChange}
-                className="form-control"
-                style={{width:'100px'}}
-              />
+                className="form-control"/>
+              <small class="form-text text-muted">
+                Ex: 2016, 2018,...
+              </small>
+                </div>
+                  <div className="col-md-3">
                 <button 
                   type="button" 
-                  className="btn btn-primary"
-                  style={{width:'300px'}}
+                  className="btn btn-primary form-control"
                   onClick={this.handleClick('getmovie')}>
                   {loading ? 'Loading...' : 'Search Movie Data'}
                 </button>
+                </div>
+                </div>
             </form>
           </div>
           {this.errorMessage( movieData)}
