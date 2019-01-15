@@ -4,12 +4,21 @@ Find Data about a Movie, like rating, actors, poster,...
 
 **Web api used [https://omdbapi.com/](https://omdbapi.com/)**
 
-## Roadmap:
+## Roadmap  
 - [x] Get data locally from netlify lambda function (getmovie).
 - [x] Get data from the web api through the netlify lambda.
 - [x] Render the result from a child component.
 - [x] Get user input.
-- [ ] Host on netlify.
-- [ ] Make the UI.
+- [x] Host on netlify.
+- [x] Make the UI.
 - [ ] Add Trailer Video from another web api.
+- [ ] Add link to official website.
+- [ ] Make a mobile app version with React Native.
 
+## Built with  
+  
+- [React](https://reactjs.org/) of course.  
+  
+- [Netlify Lambda](https://github.com/netlify/create-react-app-lambda) to hide client id and secret in the web app the front-end.  
+  
+- [Bootstrap](https://getbootstrap.com/).  
