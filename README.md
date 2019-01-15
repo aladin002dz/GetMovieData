@@ -19,6 +19,6 @@ Find Data about a Movie, like rating, actors, poster,...
   
 - [React](https://reactjs.org/) of course.  
   
-- [Netlify Lambda](https://github.com/netlify/create-react-app-lambda) to hide client id and secret in the web app the front-end.  
+- [Netlify Lambda](https://github.com/netlify/create-react-app-lambda) to hide client id and secret in the front-end of the web app.  
   
 - [Bootstrap](https://getbootstrap.com/).  
