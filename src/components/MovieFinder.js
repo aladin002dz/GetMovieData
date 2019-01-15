@@ -18,11 +18,13 @@ class MovieFinder extends Component {
     componentDidMount(){
       this.titleInput.focus(); 
    }
+
     handleChange(e) {
+
       const target = e.target;
       const value = target.value;
       const name = target.name;
-  
+
       this.setState((prevState) => {
         prevState.movieRequest[name] = value;
         return { movieRequest: prevState.movieRequest };
@@ -49,14 +51,14 @@ class MovieFinder extends Component {
       }
     };
 
-    errorMessage = ( movieData) => {
+    errorMessage = (movieData) => {
       if(movieData != null)
       {
-        this.titleInput.focus(); 
         let response = JSON.parse(movieData);
         if(response["Response"] != 'True')
         {
           movieData = null;
+          this.titleInput.focus(); 
           return (
             <div>
               <div style={{color:'red', fontSize:'2rem'}}>{response["Error"]}</div>
@@ -76,8 +78,8 @@ class MovieFinder extends Component {
 
       return (
         <div>
-          <div className="search-panel">
-            <form>  
+          <div className="search-panel mt-3">
+            <form onSubmit={this.handleClick('getmovie')}>  
             <div className="form-row">
             <div className="col-md-6">               
               <input
@@ -89,11 +91,11 @@ class MovieFinder extends Component {
                 className="form-control"
                 ref={(inputTitle) => { this.titleInput = inputTitle; }} 
               />
-              <small class="form-text text-muted">
+              <small className="form-text text-muted">
                 Ex: Sully, Vice,...
               </small>
               </div> 
-    <div className="col-md-3">
+            <div className="col-md-3">
               <input
                 type="text"
                 checked={this.props.movieYear}
@@ -101,19 +103,16 @@ class MovieFinder extends Component {
                 name="year"
                 onChange={this.handleChange}
                 className="form-control"/>
-              <small class="form-text text-muted">
+              <small className="form-text text-muted">
                 Ex: 2016, 2018,...
               </small>
                 </div>
-                  <div className="col-md-3">
-                <button 
-                  type="button" 
+            <div className="col-md-3">
+                <input type="submit" 
                   className="btn btn-primary form-control"
-                  onClick={this.handleClick('getmovie')}>
-                  {loading ? 'Loading...' : 'Search Movie Data'}
-                </button>
+                  value={loading ? 'Loading...' : 'Search Movie Data'}/>
                 </div>
-                </div>
+              </div>
             </form>
           </div>
           {this.errorMessage( movieData)}

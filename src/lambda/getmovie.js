@@ -5,12 +5,11 @@ import fetch from 'node-fetch';
 
 export async function handler(event, context) {
   try {
-    console.log('queryStringParameters: ', event.queryStringParameters);
+    
     var params = JSON.parse(event.queryStringParameters.params);
-    console.log("query params: "+JSON.stringify(params));
     const title = params.title;
     const year = params.year;
-    
+
     const { API_URL, API_CLIENT_ID, API_CLIENT_SECRET } = process.env;
     
     const URL = `${API_URL}?i=${API_CLIENT_ID}&apikey=${API_CLIENT_SECRET}&t=${title}&y=${year}`;
@@ -26,7 +25,7 @@ export async function handler(event, context) {
       body: JSON.stringify({ movieData: data })
     };
   } catch (err) {
-    console.log(err); // output to netlify function log
+    
     return {
       statusCode: 500,
       //err.message
