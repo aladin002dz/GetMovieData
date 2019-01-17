@@ -90,6 +90,7 @@ class MovieFinder extends Component {
                 onChange={this.handleChange}
                 className="form-control"
                 ref={(inputTitle) => { this.titleInput = inputTitle; }} 
+                disabled = {(loading )? "disabled" : ""}
               />
               <small className="form-text text-muted">
                 Ex: Sully, Vice,...
@@ -102,7 +103,9 @@ class MovieFinder extends Component {
                 placeholder="Year"
                 name="year"
                 onChange={this.handleChange}
-                className="form-control"/>
+                className="form-control"
+                disabled = {(loading )? "disabled" : ""}
+                />
               <small className="form-text text-muted">
                 Ex: 2016, 2018,...
               </small>

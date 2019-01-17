@@ -10,7 +10,7 @@ Find Data about a Movie, like rating, actors, poster,...
 - [x] Render the result from a child component.
 - [x] Get user input.
 - [x] Host on netlify.
-- [x] Make the UI.
+- [x] Make the UI.  
 - [ ] Change the web api.
 - [ ] Add Trailer Video from another web api.
 - [ ] Add link to official website.
