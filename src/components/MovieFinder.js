@@ -1,127 +1,103 @@
-import React, { Component } from 'react'
+//import React, { Component } from 'react'
+import React, { useState, useEffect } from "react";
 import './MovieFinder.css'
 import DisplayMovieData from './DisplayMovieData'
 
 
-const RESET_VALUES = {title: '', year: ''};
+export default function MovieFinder() {
+  const [movieData, setMovieData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [requestTitle, setRequestTitle] = useState('');
+  const [requestYear, setRequestYear] = useState('');
 
-class MovieFinder extends Component {
-    constructor(props) {
-      super(props);
-      this.state = { 
-                    movieRequest: Object.assign({}, RESET_VALUES),
-                    loading: false, 
-                    movieData: null };
-      this.handleChange = this.handleChange.bind(this);
-      this.errorMessage = this.errorMessage.bind(this);
-    }
-    componentDidMount(){
-      this.titleInput.focus(); 
-   }
-
-    handleChange(e) {
-
-      const target = e.target;
-      const value = target.value;
-      const name = target.name;
-
-      this.setState((prevState) => {
-        prevState.movieRequest[name] = value;
-        return { movieRequest: prevState.movieRequest };
+  let handleSubmit = api => e => {
+    e.preventDefault();
+    console.debug("submit");
+    setLoading(true);
+    if((requestTitle !== '')){
+    const params = '{"title":"'+requestTitle+
+                  '","year":"'+requestYear+'"}';
+    fetch('/.netlify/functions/' + api + '?params=' + params)
+      .then(response => response.json())
+      .then(json => {
+        //this.setState({ loading: false, movieData: JSON.stringify(json.movieData) });
+        console.debug("response:");
+        console.debug(JSON.stringify(json.movieData))
+        setMovieData(JSON.stringify(json.movieData));
+        setLoading(false);
       });
     }
+    else {
+      alert('Please enter the movie title!');
+      this.titleInput.focus(); 
+      //this.setState({ loading: false });
+      setLoading(false);
+    }
+  };
 
-    handleClick = api => e => {
-      e.preventDefault();
-  
-      this.setState({ loading: true });
-      if((this.state.movieRequest.title !== '')){
-      const params = '{"title":"'+this.state.movieRequest.title+
-                    '","year":"'+this.state.movieRequest.year+'"}';
-      fetch('/.netlify/functions/' + api + '?params=' + params)
-        .then(response => response.json())
-        .then(json => {
-          this.setState({ loading: false, movieData: JSON.stringify(json.movieData) });
-        });
-      }
-      else {
-        alert('Please enter the movie title!');
-        this.titleInput.focus(); 
-        this.setState({ loading: false });
-      }
-    };
-
-    errorMessage = (movieData) => {
-      if(movieData != null)
+  let errorMessage = (movieData) => {
+    if(movieData !== null)
+    {
+      let response = JSON.parse(movieData);
+      if(response["Response"] !== 'True')
       {
-        let response = JSON.parse(movieData);
-        if(response["Response"] != 'True')
-        {
-          movieData = null;
-          this.titleInput.focus(); 
-          return (
-            <div>
-              <div style={{color:'red', fontSize:'2rem'}}>{response["Error"]}</div>
-              <DisplayMovieData movieData = { JSON.parse(movieData) }/>
-            </div>
-          ) ;
-        }
-        return <DisplayMovieData movieData = { JSON.parse(movieData) }/>
+        movieData = null;
+        this.titleInput.focus(); 
+        return (
+          <div>
+            <div style={{color:'red', fontSize:'2rem'}}>{response["Error"]}</div>
+            <DisplayMovieData movieData = { JSON.parse(movieData) }/>
+          </div>
+        ) ;
       }
       return <DisplayMovieData movieData = { JSON.parse(movieData) }/>
-  }
-  
-    render() {
-  
-      const { loading, movieData } = this.state;
-
-
-      return (
-        <div>
-          <div className="search-panel mt-3">
-            <form onSubmit={this.handleClick('getmovie')}>  
-            <div className="form-row">
-            <div className="col-md-6">               
-              <input
-                type="text"
-                placeholder="Title"
-                value={this.props.movieTitle}
-                name="title"
-                onChange={this.handleChange}
-                className="form-control"
-                ref={(inputTitle) => { this.titleInput = inputTitle; }} 
-                disabled = {loading}
-              />
-              <small className="form-text text-muted">
-                Ex: Sully, Vice,...
-              </small>
-              </div> 
-            <div className="col-md-3">
-              <input
-                type="text"
-                checked={this.props.movieYear}
-                placeholder="Year"
-                name="year"
-                onChange={this.handleChange}
-                className="form-control"
-                disabled = {loading}
-                />
-              <small className="form-text text-muted">
-                Ex: 2016, 2018,...
-              </small>
-                </div>
-            <div className="col-md-3">
-                <input type="submit" 
-                  className="btn btn-primary form-control"
-                  value={loading ? 'Loading...' : 'Search Movie Data'}/>
-                </div>
-              </div>
-            </form>
-          </div>
-          {this.errorMessage( movieData)}
-        </div>
-      );
     }
+    return <DisplayMovieData movieData = { JSON.parse(movieData) }/>
   }
   
-  export default MovieFinder;
+  return (
+    <div>
+      <div className="search-panel mt-3">
+        <form onSubmit={handleSubmit('getmovie')}>  
+        <div className="form-row">
+        <div className="col-md-6">               
+          <input
+            type="text"
+            placeholder="Title"
+            value={requestTitle}
+            name="title"
+            onChange={e => setRequestTitle(e.target.value)}
+            className="form-control"
+            disabled = {loading}
+          />
+          <small className="form-text text-muted">
+            Ex: Sully, Vice,...
+          </small>
+          </div> 
+        <div className="col-md-3">
+          <input
+            type="text"
+            checked={requestYear}
+            placeholder="Year"
+            name="year"
+            onChange={e => setRequestYear(e.target.value)}
+            className="form-control"
+            disabled = {loading}
+            />
+          <small className="form-text text-muted">
+            Ex: 2016, 2018,...
+          </small>
+            </div>
+        <div className="col-md-3">
+            <input type="submit" 
+              className="btn btn-primary form-control"
+              value={loading ? 'Loading...' : 'Search Movie Data'}/>
+            </div>
+          </div>
+        </form>
+      </div>
+      {errorMessage( movieData)}
+    </div>
+  );
+}
+  
